@@ -1,0 +1,87 @@
+{% extends "bootstrap/base.html" %}
+
+{% block styles%}
+  <link href="{{url_for('static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
+  <link href="{{url_for('static', filename='css/bbs.css')}}" rel="stylesheet">
+{% endblock styles %}
+
+
+
+{% block body %}
+
+{% block topbar %}
+<nav class="navbar navbar-default" role="navigation">
+  <div class="navbar-header">
+    <a class="navbar-brand" href="#">DU1-Forum</a>
+  </div>
+  <div class="navtab" align="right">
+    <ul class="nav navbar-nav navbar-right">
+      <li class="nav-link"><a href="/node/1">Home</a> </li>
+      <li class="nav-link"><a href="#">WaterPool</a> </li>
+      <li class="nav-link"><a href="#">Songs</a> </li>
+      <li class="nav-link"><a href="/signout">Signout</a> </li>
+    </ul>
+  </div>
+</nav>
+
+{% endblock topbar %}
+
+<div class="main">
+
+    <!--<div class="nodes">-->
+      {% block nodes %}
+      {% endblock nodes %}
+    <!--</div>-->
+
+    <!--<div class="sidebar bbs-box">-->
+      {% block sidebar %}
+
+      {% endblock sidebar %}
+    <!--</div>-->
+
+
+    <!--<div class="content bbs-box majorbar">-->
+      {% block content %}
+        {% block alert %}
+        {% for message in get_flashed_messages() %}
+        <div style="float: right;" class="alert alert-warning alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endblock alert %}
+      {% endblock content %}
+    <!--</div>-->
+
+    <!--<div class="topic-post-container majorbar bbs-box">-->
+      {% block topic_post %}
+      {% endblock topic_post %}
+    <!--</div>-->
+
+</div>
+
+
+{% block footer %}
+  <div class="bottombar">
+    <div class="bottom-content">
+      <div class="bottom-nav">
+        <a href="#">About</a>
+        <span> . </span>
+        <a href="#">Thanks</a>
+        <span> . </span>
+        <a href="#">FAQ</a>
+        <span> . </span>
+        <a href="#">7 online</a>
+      </div>
+    </div>
+  </div>
+{% endblock footer %}
+
+
+{% block scripts %}
+{{ super() }}
+{%- endblock scripts %}
+
+
+
+{% endblock body %}

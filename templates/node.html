@@ -1,0 +1,66 @@
+{% extends "mybase.html" %}
+{% import '_macro.html' as macro %}
+
+{% block nodes %}
+<div class="nodes">
+    <ul class="nav nav-pills">
+        {% for n in node_list %}
+            {% if n==node %}
+            <li><a class="cur_tag" href="{{url_for('node_blue.show', id=n.id)}}">{{n.node_name}}</a></li>
+            {% else %}
+            <li ><a href="{{url_for('node_blue.show', id=n.id)}}">{{n.node_name}}</a></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>
+{% endblock nodes %}
+
+    {% block content -%}
+    <div class="content bbs-box majorbar">
+        {{super()}}
+        <div class="pagination">
+            {{ macro.paging(pagination, 'node_blue.show', id=node.id) }}
+        </div>
+
+        <ul class="topics">
+            {% for t in topics %}
+            <li class="topic">
+                <div class="topic-body">
+                    <div class="topic-date"> t.timestamp </div>
+                    <div class="topic-author">{{t.id}}:<a href="{{url_for('topic_blue.show', id=t.id)}}">{{t.title}}</a></div>
+                    <div class="topic-content">{{ t.content }}</div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {%- endblock content %}
+
+
+    {% block topic_post %}
+    <div class="topic-post-container majorbar bbs-box">
+        <span class="label label-default">Share your idea:</span>
+        <form role="form" action="{{url_for('topic_blue.new')}}" method="post">
+            <div class="form-group">
+                <input class="form-control" type="text" name="title" placeholder="title">
+            </div>
+            <div><input type="hidden" name="node_id" value="{{node.id}}"></div>
+            <div>
+                <textarea class="form-control" rows="5" name="content" placeholder="content"></textarea>
+            </div>
+            <button class="btn btn-default disabled" type="submit">post topic</button>
+        </form>
+    </div>
+    {%- endblock topic_post %}
+
+
+    {%- block sidebar %}
+    <div class="sidebar bbs-box">
+        {% if user %}
+            <h1>Hello! {{user.username}}</h1>
+        {% else %}
+            <h1>Hello! guest</h1>
+            <a href="/login">Signin to share</a>
+        {% endif %}
+    </div>
+    {%- endblock sidebar %}

@@ -1,0 +1,11 @@
+{% extends 'node_index.html' %}
+
+{% block content -%}
+    <div class="">
+        <a href="{{url_for('node_blue.show', id=topic.node_id)}}">{{topic.node_ref.node_name}}</a>
+    </div>
+    <div>
+        <h1>{{topic.title}}</h1>
+        <p>{{topic.content}}</p>
+    </div>
+{% endblock content -%}

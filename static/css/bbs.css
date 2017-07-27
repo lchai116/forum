@@ -1,0 +1,89 @@
+body {
+    margin: 0;
+    background: #e6e6e6;
+}
+
+.bottombar {
+    margin: 10px;
+    font-size: 90%;
+    color: lightgray;
+    background: white;
+    width: 100%
+    border-top: 1px solid lightgray;
+    text-align: center;
+    padding: 15px;
+}
+
+.main {
+    margin: 20px auto;
+    width: 1000px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background: #31044d;
+}
+
+
+.majorbar {
+    margin: 10px 310px 10px 10px;
+    background: white;
+    padding:10px;
+    font-size: 105%;
+}
+
+.pagination {
+    margin: 15px 5px;
+}
+
+.sidebar {
+    width: 280px;
+    font-size: 105%;
+    float: right;
+    margin: 10px 10px 10px 10px;
+    padding:15px;
+}
+
+.navtab {
+    margin: 5px;
+}
+.nav-link:hover {
+    background: #3385ff;
+}
+
+.bbs-box {
+    border-radius: 8px;
+    background: white;
+}
+
+.cur_tag {
+    background: #eee;
+}
+
+
+.topics {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px 0px 30px 0px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.topics .topic {
+    padding: 8px;
+    border-bottom: 1px solid #e0e0e0;
+}
+.topics .topic:hover {
+    background-color: #f0f0f0;
+}
+.topic-date {
+    float: right;
+}
+.topic-body {
+    margin-left: 48px;
+    min-height: 48px;
+}
+
+.sign-title {
+    border-bottom: solid 1px;
+    margin-bottom: 30px;
+    border-color: lightgray;
+    padding-bottom: 30px;
+}

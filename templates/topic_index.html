@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>nodes</title>
+</head>
+<body>
+    <form action="{{url_for('.new')}}" method="post">
+        <div>
+            <input type="text" name="title" placeholder="title">
+        </div>
+        <div>
+            <textarea name="content" placeholder="content">topic</textarea>
+        </div>
+        <button type="submit">post topic</button>
+    </form>
+    {% for t in topic_list%}
+        <div>
+            <h1>
+                {{t.id}}:{{t.title}}
+            </h1>
+                <a href="{{url_for('.remove', id=node.id)}}">del</a>
+                <a href="{{url_for('.edit', id=node.id)}}">edit</a>
+            <div>
+                {{t.content}}
+            </div>
+        </div>
+    {% endfor %}
+</body>
+</html>
