@@ -1,0 +1,147 @@
+{% extends "mybase.html" %}
+
+{% block title %}
+    <title>DU1>{{user.username}}</title>
+{% endblock %}
+
+
+{% block sidebar %}
+ <div class="sidebar bbs-box">
+     <div>
+         <a href="{{url_for('user_blue.profile', username= user.username)}}"><img class="bbs-avatar" src="{{user.avatar}}" height="48" width="55"></a>
+         <span class="greeting"><a href="{{url_for('user_blue.profile', username= user.username)}}">{{user.username}}</a></span>
+     </div>
+ </div>
+{% endblock sidebar %}
+
+
+
+{% block content -%}
+<div class="content bbs-box majorbar">
+{{super()}}
+    <div class="bbs-box-header">
+        <a href="{{url_for('node_blue.show', id=1)}}">Homepage</a>
+        {% if cur_user.id == 1 %}
+        / <a href="{{ url_for('backend_blue.index') }}">BackEnd</a>
+        {% endif %}
+    </div>
+    <div class="bbs-box-cell">
+        <div>
+            <a href="{{url_for('user_blue.profile', username=user.username)}}">
+                <img class="bbs-avatar" src="{{user.avatar}}" height="48" width="55">
+            </a>
+        </div>
+        <div class="user-profile" style="margin-top: 10px;">
+            <div>Username: {{user.username}}</div>
+            {% if user.id == cur_user.id %}
+            <div>
+                <form action="{{ url_for('user_blue.add_img') }}" method="post" enctype="multipart/form-data">
+                    Select an image:
+                    <input style="display: inline;" type="file" name="avatar"/>
+                    <input style="border: lightgrey;" type="submit" value="upload">
+                </form>
+            </div>
+            {% endif %}
+            <div>E-mail: {{user.email}}</div>
+            <div>Member since: <time id="id-time">{{user.created_time}}</time></div>
+        </div>
+    </div>
+
+    </div>
+
+
+
+
+<div class=" bbs-box majorbar">
+    <div class="bbs-box-header">
+        <span>Recently created topics</span>
+    </div>
+    <div class="bbs-box-cell">
+
+
+        <ul class="topics" style="margin-bottom: 0px;">
+            {% for t in topics_created %}
+            <li class="topic">
+                <div class="topic-item-container">
+                    <div class="topic-date"></div>
+                    <a class="topic-cell-avatar" href="{{url_for('user_blue.profile', username=t.user_ref.username)}}">
+                        <img class="bbs-avatar" src="{{t.user_ref.avatar}}" height="48" width="55">
+                    </a>
+                    <div class="topic-list-cell">
+                        <div class="topic-cell-title"><a href="{{url_for('topic_blue.show', id=t.id)}}">{{t.title}}</a></div>
+                        <div class="topic-cell-info">
+                            <strong><a href="{{url_for('user_blue.profile', username=t.user_ref.username)}}">{{t.user_ref.username}}</a></strong>
+                            &nbsp;  •  &nbsp;
+                            last updated by
+                            <strong>
+                                <a href="{{url_for('user_blue.profile', username=t.lastreplyer_ref.username)}}">
+                                    {{t.lastreplyer_ref.username}}
+                                </a>
+                            </strong>
+                            &nbsp<time>{{t.lastreplytime}}</time>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+
+
+    </div>
+    <div class="bbs-box-tail">
+        <a href="{{url_for('user_blue.user_topics', username=user.username)}}">more>></a>
+    </div>
+</div>
+
+<div class=" bbs-box majorbar">
+    <div class="bbs-box-header">
+        <span>Recently involved topics</span>
+    </div>
+    <div class="bbs-box-cell">
+
+        <ul class="topics" style="margin-bottom: 0px;">
+            {% for t in topics_related %}
+            <li class="topic">
+                <div class="topic-item-container">
+                    <div class="topic-date"></div>
+                    <a class="topic-cell-avatar" href="{{url_for('user_blue.profile', username=t.user_ref.username)}}">
+                        <img class="bbs-avatar" src="{{t.user_ref.avatar}}" height="48" width="55">
+                    </a>
+                    <div class="topic-list-cell">
+                        <div class="topic-cell-title"><a href="{{url_for('topic_blue.show', id=t.id)}}">{{t.title}}</a></div>
+                        <div class="topic-cell-info">
+                            <strong>
+                                <a href="{{url_for('user_blue.profile', username=t.user_ref.username)}}">
+                                    {{t.user_ref.username}}
+                                </a>
+                            </strong>
+                            &nbsp;  •  &nbsp;
+                            last updated by
+                            <strong>
+                                <a href="{{url_for('user_blue.profile', username=t.lastreplyer_ref.username)}}">
+                                    {{t.lastreplyer_ref.username}}
+                                </a>
+                            </strong>
+                            &nbsp<time>{{t.lastreplytime}}</time>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+
+
+
+    </div>
+    <div class="bbs-box-tail">
+        <a href="{{url_for('user_blue.user_replied_topics', username=user.username)}}">more>></a>
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+
+
+

@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--<link href="/static/css/bootstrap.min.css" rel="stylesheet">-->
+  <link href="/static/css/bbs.css" rel="stylesheet">
+    <style>
+        .bbs-nav-container {
+            position: fixed;
+            z-index: 10;
+            top: 0px;
+            width: 100%;
+            background-color: #f8f8f8;
+            font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+            /* margin-bottom: 20px; */
+        }
+
+        .bbs-nav-container a {
+            text-decoration: none;
+            display: inline-block;
+            color: #777;
+        }        
+
+        .bbs-nav-header {
+            float: left;
+        }
+
+        .bbs-nav-header a {
+            font-size: 30px;
+            padding: 8px;
+        }
+
+        .bbs-nav-cell {
+            
+          /*  display flex; */
+        }
+
+        .bbs-navcell-item {
+            display: inline-block;
+            flex-grow: 1;
+         /*   height: 20px;  */
+            font-size: 17px;
+            padding: 15px;
+        }
+        .bbs-navcell-item:hover {
+            background-color: #31044d;
+        }
+
+    </style>
+
+  </head>
+  <body>
+    
+
+
+<div class="bbs-nav-container">
+  <div class="bbs-nav-header">
+    <a href="#">DU1-Forum</a>
+  </div>
+  <div class="bbs-nav-cell" align="right">
+      <a class="bbs-navcell-item" href="/node/1">Home</a>
+      <a class="bbs-navcell-item" href="#">WaterPool</a>
+      <a class="bbs-navcell-item" href="#">Songs</a>
+      
+      <a class="bbs-navcell-item" href="/signin">Sign In</a>
+      
+  </div>
+</div>
+
+
+  </body>
+</html>

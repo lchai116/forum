@@ -2,7 +2,8 @@ from models.node import NodeCls
 from models.user import UserCls
 from models.topic import TopicCls
 from . import *
-#from flask import Blueprint
+
+# from flask import Blueprint
 
 
 main = Blueprint('node_blue', __name__)
@@ -11,12 +12,12 @@ main = Blueprint('node_blue', __name__)
 @main.route('/')
 def index():
     ns = NodeCls.query.all()
-    u = None #current_user()
+    u = None  # current_user()
     return render_template('node_index.html', node_list=ns, user=u)
 
 
-#@main.route('/<int:id>')
-#def show(id):
+# @main.route('/<int:id>')
+# def show(id):
 #    n = NodeCls.query.get(id)
 #    ns = NodeCls.query.all()
 #    topic_list = n.topics
@@ -24,16 +25,17 @@ def index():
 
 
 @main.route('/<int:id>')
-def show(id):
+def show(id=1):
     n = NodeCls.query.get(id)
     ns = NodeCls.query.all()
-    topic_list = n.topics
+    # topic_list = n.topics
     page = request.args.get('p', 1, type=int)
-    pagination = TopicCls.query.filter_by(node_id=id).paginate(page, per_page=6)
+    pagination = TopicCls.query.filter_by(node_id=id) \
+        .order_by(TopicCls.lastreplytime.desc(), TopicCls.created_time.desc()) \
+        .paginate(page, per_page=6)
     ts = pagination.items
     u = cur_user()
-    return render_template('node.html', node=n, node_list=ns, topics=ts, pagination=pagination, user=u)
-
+    return render_template('node.html', node=n, node_list=ns, topics=ts, pagination=pagination, cur_user=u)
 
 
 @main.route('/add', methods=['post'])

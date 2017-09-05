@@ -1,0 +1,16 @@
+.form-node-add {
+    padding: 16px;
+}
+.node-item-container {
+    min-height: 35px;
+}
+.node-list-cell {
+    margin-left: 40px;
+}
+.node-delete-btn {
+    margin-right: 20px;
+    float: right;
+}
+.node-cell-title {
+
+}

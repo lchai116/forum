@@ -1,11 +1,121 @@
-{% extends 'node_index.html' %}
+{% extends 'mybase.html' %}
 
-{% block content -%}
-    <div class="">
-        <a href="{{url_for('node_blue.show', id=topic.node_id)}}">{{topic.node_ref.node_name}}</a>
+{% block content %}
+<div class="content bbs-box majorbar">
+    <div class="topic-container">
+        <div class="topic-header">
+            <a class="topic-cell-avatar" href="{{url_for('user_blue.profile', username=topic.user_ref.username)}}">
+                <img class="bbs-avatar" src="{{topic.user_ref.avatar}}">
+            </a>
+            <div class="topic-header-cell">
+                <div class="topic-full-title">{{topic.title}}</div>
+                <div class="topic-info">
+                    <strong><a href="{{url_for('user_blue.profile', username=topic.user_ref.username)}}">{{topic.user_ref.username}}</a></strong>
+                      •
+                    posted at
+                    <time>{{topic.created_time}}</time>
+                      •
+                    from
+                    <a href="{{url_for('node_blue.show', id=topic.node_id)}}">{{topic.node_ref.node_name}}</a>
+                      •
+                    {{topic.views}}hits
+                </div>
+                <div>
+                    {% if topic.user_id == cur_user.id %}
+                    <form action="{{ url_for('topic_blue.remove', id=topic.id) }}" method="post">
+                        <input type="hidden" name="csrftoken" value="{{csrftoken}}">
+                        <button class="topic-delete-btn" type="submit">Delete</button>
+                    </form>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+        <div class="topic-full-body">
+            {{topic.content}}
+        </div>
     </div>
-    <div>
-        <h1>{{topic.title}}</h1>
-        <p>{{topic.content}}</p>
+</div>
+
+<div class=" bbs-box majorbar">
+    <div class="bbs-box-header">
+        <span>{{topic.replycount}}&nbsp;•&nbsp;Comments</span>
     </div>
-{% endblock content -%}
+    <ul class="ul-comments">
+        {% for c in comments %}
+        <li class="li-comment" data-id="{{c.id}}">
+            <div class="comment-item-container">
+                <a class="comment-cell-avatar" href="{{url_for('user_blue.profile', username=c.sender_name)}}">
+                    <img class="bbs-avatar" src="{{c.avatar}}" height="48" width="48">
+                </a>
+                <div class="comment-buttons">
+                    <div class="comment-btn-like">
+
+                        {% if c.islike%}
+                        <a href="#"><span class="glyphicon glyphicon-thumbs-up comment-like-icon"></span></a>
+                        {% else %}
+                        <a href="#"><span class="glyphicon glyphicon-thumbs-up comment-like-icon like-icon-unhit"></span></a>
+                        {% endif %}
+                        &nbsp;
+                        <label class="comment-like-num">{{c.like_num}}</label>
+                    </div>
+                    <label class="comment-reply-btn">Reply</label>
+                    <!--<button class="comment-reply-btn">Reply</button>-->
+                </div>
+                <div class="comment-cell">
+                    <div class="comment-info">
+                        <strong><a href="{{url_for('user_blue.profile', username=c.sender_name)}}">{{c.sender_name}}</a></strong>
+                        &nbsp;  •  &nbsp;
+                        <time>{{c.created_time}}</time>
+                    </div>
+                    <div class="comment-content">
+                        <a href="{{url_for('user_blue.profile', username=c.receiver_name)}}">
+                            @{{c.receiver_name}}
+                        </a>
+                        {{c.content}}
+                    </div>
+                </div>
+
+            </div>
+            <div class="comment-reply-form">
+                <form role="form" action="{{url_for('comment_blue.new')}}" method="post">
+                    <div><input type="hidden" name="topic_id" value="{{topic.id}}"></div>
+                    <div><input type="hidden" name="receiver_id" value="{{c.sender_id}}"></div>
+                    <div>
+                        <textarea class="form-control" rows="4" name="content"></textarea>
+                    </div>
+                    <button class="btn btn-default comment-reply-submit" type="submit">Reply</button>
+                </form>
+            </div>
+
+
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+
+<div class=" bbs-box majorbar">
+    <div class="bbs-box-header">
+        <span>Give your comment</span>
+    </div>
+    <div class="bbs-box-cell bbs-comment-post">
+        <form role="form" action="{{url_for('comment_blue.new')}}" method="post">
+            <div><input type="hidden" name="topic_id" value="{{topic.id}}"></div>
+            <div><input type="hidden" name="receiver_id" value="{{topic.user_ref.id}}"></div>
+            <div>
+                <textarea id="id-comment-content" class="form-control" rows="5" name="content"></textarea>
+            </div>
+            <button id="id-comment-submit" class="btn btn-default" type="submit">Comment</button>
+        </form>
+    </div>
+
+</div>
+{% endblock content %}
+
+
+
+{% block scripts %}
+{{ super() }}
+<script src="/static/js/myjs-topic.js"></script>
+{%- endblock scripts %}

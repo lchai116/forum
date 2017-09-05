@@ -1,44 +1,78 @@
 from models.user import UserCls
+from models.topic import TopicCls, CommentCls
 from . import *
 
+
 main = Blueprint('user_blue', __name__)
+upload_dir = '/static/uploads/'
 
 
-@main.route('/login', methods=['post', 'get'])
-def signin():
-    if request.method == 'POST':
-        form = request.form
-        u = UserCls(form)
-        if u.validate_login():
-            u_db = UserCls.query.filter_by(username=u.username).first()
-            session['user_id'] = u_db.id
-            return redirect(url_for('node_blue.show', id=1))
-        else:
-            flash('Incorrect username or password!')
-            return redirect(url_for('.signin'))
+@main.route('/profile/<username>')
+def profile(username):
+    u = UserCls.query.filter_by(username=username).first()
+    if u:
+        cur_u = cur_user()
+        tpc_rel = TopicCls.query.join(CommentCls, CommentCls.topic_id==TopicCls.id)\
+                .filter(CommentCls.sender_id==u.id)\
+                .order_by(CommentCls.created_time.desc()).limit(5)#.filter(CommentCls.sender_id==u.id)
+        tpc_create = TopicCls.query.filter_by(user_id=u.id).order_by(TopicCls.created_time.desc()).limit(5)
+
+        # print tpc_rel.first().user_ref.topics
+        return render_template('user/profile.html', user=u, topics_created=tpc_create,
+                                topics_related=tpc_rel, cur_user=cur_u)
     else:
-        return render_template('user/login.html')
+        abort(404)
 
 
-@main.route('/signup',methods=['post', 'get'])
-def signup():
-    if request.method == 'POST':
-        form = request.form
-        u = UserCls(form)
-        if u.validate_register():
-            u.save()
-            u_db = UserCls.query.filter_by(username=u.username).first()
-            session['user_id'] = u_db.id
-            return redirect(url_for('node_blue.show', id=1))
-        else:
-            flash('Username exists or length shorter than 4 chars!')
-            return redirect(url_for('.signup'))
+def valid_img_upload(filename):
+    suffix = filename.split('.')[-1]
+    return suffix.lower() in ['png', 'jpg', 'gif']
+
+
+@main.route('/addimg', methods=['post'])
+def add_img():
+    u = cur_user()
+
+    f = request.files.get('avatar')
+    if f and valid_img_upload(f.filename):
+        filename  = str(uuid.uuid4())
+        path = upload_dir + filename + '.' + f.filename.split('.')[-1]
+        f.save(path[1:])
+        u.avatar = path
+        u.save()
+    return redirect(url_for('user_blue.profile', username=u.username))
+
+
+@main.route('/profile/<username>/topics')
+def user_topics(username):
+    u = UserCls.query.filter_by(username=username).first()
+    if u:
+        #cur_u = cur_user()
+        page = request.args.get('p', 1, type=int)
+        pagination = TopicCls.query.filter_by(user_id=u.id)\
+                    .order_by(TopicCls.created_time.desc()).paginate(page, per_page=8)
+        user_topics = pagination.items
+
+        return render_template('user/usertopics.html', user=u, topics_created=user_topics,
+                               pagination=pagination)
     else:
-        return render_template('user/signup.html')
+        abort(404)
 
 
-@main.route('/signout')
-@login_required
-def signout():
-    session.pop('user_id', None)
-    return redirect(url_for('node_blue.show', id=1))
+@main.route('/profile/<username>/replies')
+def user_replied_topics(username):
+    u = UserCls.query.filter_by(username=username).first()
+    if u:
+        #cur_u = cur_user()
+        page = request.args.get('p', 1, type=int)
+
+        pagination = TopicCls.query.join(CommentCls, CommentCls.topic_id == TopicCls.id) \
+            .filter(CommentCls.sender_id == u.id) \
+            .order_by(CommentCls.created_time.desc()).paginate(page, per_page=8)
+
+        tpc_rel = pagination.items
+
+        return render_template('user/user_replied_topics.html', user=u, topics_replied=tpc_rel,
+                               pagination=pagination)
+    else:
+        abort(404)

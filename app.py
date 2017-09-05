@@ -6,12 +6,17 @@ from routes import bootstrap
 from routes.node import main as node_blue
 from routes.topic import main as topic_blue
 from routes.user import main as user_blue
+from routes.auth import main as auth_blue
+from routes.comment import main as comment_blue
+from routes.comment_api import main as commentApi_blue
+from routes.backend import main as backend_blue
 
 
 # for db migration
 from models.user import UserCls
 from models.node import NodeCls
-from models.topic import TopicCls
+from models.topic import TopicCls, CommentCls, CommentLike
+
 
 app = Flask(__name__)
 manager = Manager(app)
@@ -23,7 +28,11 @@ print list(app.iter_blueprints())
 def register_routes():
     app.register_blueprint(node_blue, url_prefix='/node')
     app.register_blueprint(topic_blue, url_prefix='/topic')
-    app.register_blueprint(user_blue)
+    app.register_blueprint(auth_blue)
+    app.register_blueprint(user_blue, url_prefix='/user')
+    app.register_blueprint(comment_blue, url_prefix='/comment')
+    app.register_blueprint(commentApi_blue, url_prefix='/api')
+    app.register_blueprint(backend_blue, url_prefix='/backend')
 
 
 def configure_app():

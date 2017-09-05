@@ -25,10 +25,26 @@
         <ul class="topics">
             {% for t in topics %}
             <li class="topic">
-                <div class="topic-body">
-                    <div class="topic-date"> t.timestamp </div>
-                    <div class="topic-author">{{t.id}}:<a href="{{url_for('topic_blue.show', id=t.id)}}">{{t.title}}</a></div>
-                    <div class="topic-content">{{ t.content }}</div>
+                <div class="topic-item-container">
+                    <div class="topic-date"></div>
+                    <a class="topic-cell-avatar" href="{{url_for('user_blue.profile', username=t.user_ref.username)}}">
+                        <img class="bbs-avatar" src="{{t.user_ref.avatar}}" height="48" width="48">
+                    </a>
+                    <div class="topic-views"><strong>{{t.replycount}}&nbsp;/&nbsp;{{t.views}}</strong></div>
+                    <div class="topic-list-cell">
+                        <div class="topic-cell-title"><a href="{{url_for('topic_blue.show', id=t.id)}}">{{t.title}}</a></div>
+                        <div class="topic-cell-info">
+                            <strong><a href="{{url_for('user_blue.profile', username=t.user_ref.username)}}">{{t.user_ref.username}}</a></strong>
+                            &nbsp;  •  &nbsp;
+                            last updated by
+                            <strong>
+                                <a href="{{url_for('user_blue.profile', username=t.lastreplyer_ref.username)}}">
+                                    {{t.lastreplyer_ref.username}}
+                                </a>
+                            </strong>
+                            &nbsp;<time>{{t.lastreplytime}}</time>
+                        </div>
+                    </div>
                 </div>
             </li>
             {% endfor %}
@@ -42,25 +58,24 @@
         <span class="label label-default">Share your idea:</span>
         <form role="form" action="{{url_for('topic_blue.new')}}" method="post">
             <div class="form-group">
-                <input class="form-control" type="text" name="title" placeholder="title">
+                <input id="id-input-title" class="form-control" type="text" name="title" placeholder="title">
             </div>
             <div><input type="hidden" name="node_id" value="{{node.id}}"></div>
             <div>
-                <textarea class="form-control" rows="5" name="content" placeholder="content"></textarea>
+                <textarea id="id-topic-content" class="form-control" rows="5" name="content" placeholder="content"></textarea>
             </div>
-            <button class="btn btn-default disabled" type="submit">post topic</button>
+            <button id="id-topic-submit" class="btn btn-default" type="submit">Submit</button>
         </form>
     </div>
     {%- endblock topic_post %}
 
 
     {%- block sidebar %}
-    <div class="sidebar bbs-box">
-        {% if user %}
-            <h1>Hello! {{user.username}}</h1>
-        {% else %}
-            <h1>Hello! guest</h1>
-            <a href="/login">Signin to share</a>
-        {% endif %}
-    </div>
+    {{ super()}}
     {%- endblock sidebar %}
+
+
+{% block scripts %}
+{{ super() }}
+<script src="/static/js/myjs-node.js"></script>
+{%- endblock scripts %}
