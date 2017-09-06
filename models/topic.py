@@ -1,4 +1,5 @@
 from . import db, ModelMixin, unix_time
+from .user import UserCls
 
 
 class TopicCls(db.Model, ModelMixin):
@@ -11,7 +12,6 @@ class TopicCls(db.Model, ModelMixin):
     replycount = db.Column(db.Integer, default=0)
     views = db.Column(db.Integer, default=0)
 
-    #
     node_id = db.Column(db.Integer, db.ForeignKey('nodes.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     replyuser_id = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -63,15 +63,19 @@ class CommentCls(db.Model, ModelMixin):
     def __init__(self, form):
         self.content = form.get('content', '')
         self.created_time = unix_time()
-        self.topic_id = int(form.get('topic_id', -1))
+        self.topic_id = form.get('topic_id', -1, type=int)
+        self.receiver_id = form.get('receiver_id', -1, type=int)
 
     def isvalid_comment(self):
-        if len(self.content) > 3 and self.topic_id > 0:
+        isvalid_length = len(self.content) > 3
+        topic_inst = TopicCls.query.get(self.topic_id)
+        receiver_inst = UserCls.query.get(self.receiver_id)
+        if isvalid_length and topic_inst and receiver_inst:
             return True
         else:
             return False
 
-    def topic_update(self):
+    def topic_reply_update(self):
         t = TopicCls.query.get(self.topic_id)
         t.lastreplytime = self.created_time
         t.replyuser_id = self.sender_id

@@ -1,12 +1,9 @@
 {% macro paging(pagination, endpoint) %}
 <ul class="pagination">
-
     {% if pagination.has_prev %}
     <li><a href="{{ url_for(endpoint,p = pagination.page - 1, **kwargs) }}">&laquo;</a></li>
     {% else %}
-    <li class="disabled">
-        <a href="#">&laquo;</a>
-    </li>
+    <li class="disabled"><a href="#">&laquo;</a></li>
     {% endif %}
 
 
@@ -26,11 +23,7 @@
     {% if pagination.has_next %}
     <li><a href="{{ url_for(endpoint,p = pagination.page + 1, **kwargs) }}">&raquo;</a></li>
     {% else %}
-    <li class="disabled">
-        <a href="#">&raquo;</a>
-    </li>
+    <li class="disabled"><a href="#">&raquo;</a></li>
     {% endif %}
-
 </ul>
-
 {% endmacro %}

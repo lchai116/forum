@@ -1,8 +1,15 @@
 {% extends "mybase.html" %}
 
+
 {% block title %}
     <title>DU1>{{user.username}}</title>
 {% endblock %}
+
+
+{% block styles%}
+{{ super() }}
+<link href="{{url_for('static', filename='css/profile.css')}}" rel="stylesheet">
+{% endblock styles %}
 
 
 {% block sidebar %}
@@ -15,10 +22,9 @@
 {% endblock sidebar %}
 
 
-
 {% block content -%}
 <div class="content bbs-box majorbar">
-{{super()}}
+    {{super()}}
     <div class="bbs-box-header">
         <a href="{{url_for('node_blue.show', id=1)}}">Homepage</a>
         {% if cur_user.id == 1 %}
@@ -46,19 +52,11 @@
             <div>Member since: <time id="id-time">{{user.created_time}}</time></div>
         </div>
     </div>
-
-    </div>
-
-
-
+</div>
 
 <div class=" bbs-box majorbar">
-    <div class="bbs-box-header">
-        <span>Recently created topics</span>
-    </div>
+    <div class="bbs-box-header"><span>Recently created topics</span></div>
     <div class="bbs-box-cell">
-
-
         <ul class="topics" style="margin-bottom: 0px;">
             {% for t in topics_created %}
             <li class="topic">
@@ -85,8 +83,6 @@
             </li>
             {% endfor %}
         </ul>
-
-
     </div>
     <div class="bbs-box-tail">
         <a href="{{url_for('user_blue.user_topics', username=user.username)}}">more>></a>
@@ -98,7 +94,6 @@
         <span>Recently involved topics</span>
     </div>
     <div class="bbs-box-cell">
-
         <ul class="topics" style="margin-bottom: 0px;">
             {% for t in topics_related %}
             <li class="topic">
@@ -129,9 +124,6 @@
             </li>
             {% endfor %}
         </ul>
-
-
-
     </div>
     <div class="bbs-box-tail">
         <a href="{{url_for('user_blue.user_replied_topics', username=user.username)}}">more>></a>

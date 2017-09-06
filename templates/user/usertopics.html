@@ -1,9 +1,16 @@
 {% extends "mybase.html" %}
 {% import '_macro.html' as macro %}
 
+
 {% block title %}
     <title>DU1>{{user.username}}</title>
 {% endblock %}
+
+
+{% block styles%}
+{{ super() }}
+<link href="{{url_for('static', filename='css/node.css')}}" rel="stylesheet">
+{% endblock styles %}
 
 
 {% block sidebar %}
@@ -16,17 +23,10 @@
 {% endblock sidebar %}
 
 
-
 {% block content -%}
-
-
 <div class=" bbs-box majorbar">
-    <div class="bbs-box-header">
-        <span>Recently created topics</span>
-    </div>
+    <div class="bbs-box-header"><span>Recently created topics</span></div>
     <div class="bbs-box-cell">
-
-
         <ul class="topics" style="margin-bottom: 0px;">
             {% for t in topics_created %}
             <li class="topic">
@@ -54,12 +54,10 @@
             {% endfor %}
         </ul>
     </div>
-
     <div class="pagination">
         {{ macro.paging(pagination, 'user_blue.user_topics', username=user.username) }}
     </div>
 </div>
-
 {% endblock %}
 
 

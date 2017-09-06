@@ -1,6 +1,7 @@
 {% extends "mybase.html" %}
 {% import '_macro.html' as macro %}
 
+
 {% block title %}
 nodes
 {% endblock title %}
@@ -24,48 +25,39 @@ nodes
 
 
 {% block content -%}
-    <div class="content bbs-box majorbar">
-        {{super()}}
-        <div class="form-node-add">
-            <form action="{{url_for('backend_blue.new')}}" method="post" class="form-inline" role="form">
-                <div class="form-group">
-                    <input name="node_name" class="form-control" placeholder="add a node">
-                </div>
-                <button type="submit" class="btn btn-default">Add</button>
-            </form>
-        </div>
-        <ul class="topics">
-            {% for n in node_list %}
-            <li class="topic">
-                <div class="node-item-container">
-                    <div class="node-list-cell">
-
-                        <div class="node-delete-btn">
-                            <form action="{{ url_for('backend_blue.remove', id=n.id) }}" method="post">
-                                <input type="hidden" name="csrftoken" value="{{csrftoken}}">
-                                <button class="btn btn-default" type="submit">Delete</button>
-                            </form>
-                        </div>
-
-                        <div class="topic-cell-title"><a href="{{url_for('node_blue.show', id=n.id)}}">{{n.node_name}}</a></div>
-
-
-                    </div>
-
-                </div>
-            </li>
-            {% endfor %}
-        </ul>
+<div class="content bbs-box majorbar">
+    {{super()}}
+    <div class="form-node-add">
+        <form action="{{url_for('backend_blue.new')}}" method="post" class="form-inline" role="form">
+            <div class="form-group">
+                <input name="node_name" class="form-control" placeholder="add a node">
+            </div>
+            <button type="submit" class="btn btn-default">Add</button>
+        </form>
     </div>
-
-
+    <ul class="topics">
+        {% for n in node_list %}
+        <li class="topic">
+            <div class="node-item-container">
+                <div class="node-list-cell">
+                    <div class="node-delete-btn">
+                        <form action="{{ url_for('backend_blue.remove', id=n.id) }}" method="post">
+                            <input type="hidden" name="csrftoken" value="{{csrftoken}}">
+                            <button class="btn btn-default" type="submit">Delete</button>
+                        </form>
+                    </div>
+                    <div class="topic-cell-title"><a href="{{url_for('node_blue.show', id=n.id)}}">{{n.node_name}}</a></div>
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
 {%- endblock content %}
 
 
 {%- block sidebar %}
-<div class="sidebar bbs-box">
-    <h1>Hello! Administer</h1>
-</div>
+<div class="sidebar bbs-box"><h1>Hello! Administer</h1></div>
 {%- endblock sidebar %}
 
 

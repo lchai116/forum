@@ -17,7 +17,6 @@ def profile(username):
                 .order_by(CommentCls.created_time.desc()).limit(5)#.filter(CommentCls.sender_id==u.id)
         tpc_create = TopicCls.query.filter_by(user_id=u.id).order_by(TopicCls.created_time.desc()).limit(5)
 
-        # print tpc_rel.first().user_ref.topics
         return render_template('user/profile.html', user=u, topics_created=tpc_create,
                                 topics_related=tpc_rel, cur_user=cur_u)
     else:
@@ -32,7 +31,6 @@ def valid_img_upload(filename):
 @main.route('/addimg', methods=['post'])
 def add_img():
     u = cur_user()
-
     f = request.files.get('avatar')
     if f and valid_img_upload(f.filename):
         filename  = str(uuid.uuid4())
@@ -47,7 +45,6 @@ def add_img():
 def user_topics(username):
     u = UserCls.query.filter_by(username=username).first()
     if u:
-        #cur_u = cur_user()
         page = request.args.get('p', 1, type=int)
         pagination = TopicCls.query.filter_by(user_id=u.id)\
                     .order_by(TopicCls.created_time.desc()).paginate(page, per_page=8)
@@ -63,9 +60,7 @@ def user_topics(username):
 def user_replied_topics(username):
     u = UserCls.query.filter_by(username=username).first()
     if u:
-        #cur_u = cur_user()
         page = request.args.get('p', 1, type=int)
-
         pagination = TopicCls.query.join(CommentCls, CommentCls.topic_id == TopicCls.id) \
             .filter(CommentCls.sender_id == u.id) \
             .order_by(CommentCls.created_time.desc()).paginate(page, per_page=8)

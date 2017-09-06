@@ -1,33 +1,30 @@
 {% extends "bootstrap/base.html" %}
 
+
 {% block styles%}
 <link href="{{url_for('static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
 <link href="{{url_for('static', filename='css/bbs.css')}}" rel="stylesheet">
 <link href="{{url_for('static', filename='css/sweetalert2.min.css')}}" rel="stylesheet">
-<link href="{{url_for('static', filename='css/backend.css')}}" rel="stylesheet">
 {% endblock styles %}
 
 
 {% block body %}
 
+
 {% block topbar %}
 <div class="bbs-nav-container">
-    <div class="bbs-nav-header">
-        <a href="#">DU1-Forum</a>
-    </div>
+    <div class="bbs-nav-header"><a href="#">DU1-Forum</a></div>
     <div class="bbs-nav-cell" align="">
-        <a class="bbs-navcell-item" href="/node/1">Home</a>
+        <a class="bbs-navcell-item" href="{{ url_for('node_blue.show') }}">Home</a>
         <a class="bbs-navcell-item" href="#">WaterPool</a>
         <a class="bbs-navcell-item" href="#">Songs</a>
         {% if cur_user %}
-        <a class="bbs-navcell-item" href="/signout">Sign Out</a>
+        <a class="bbs-navcell-item" href="{{ url_for('auth_blue.signout') }}">Sign Out</a>
         {% else %}
-        <a class="bbs-navcell-item" href="/signin">Sign In</a>
+        <a class="bbs-navcell-item" href="{{ url_for('auth_blue.signin') }}">Sign In</a>
         {% endif %}
     </div>
 </div>
-
-
 {% endblock topbar %}
 
 
@@ -40,14 +37,15 @@
     {% endblock nodes %}
     <!--</div>-->
 
+
     <!--<div class="sidebar bbs-box">-->
     {% block sidebar %}
     <div class="sidebar bbs-box">
         {% if cur_user %}
         <div>
-            <a href="{{url_for('user_blue.profile', username= cur_user.username)}}"><img class="bbs-avatar"
-                                                                                         src="{{cur_user.avatar}}"
-                                                                                         height="48" width="55"></a>
+            <a href="{{url_for('user_blue.profile', username= cur_user.username)}}">
+                <img class="bbs-avatar" src="{{cur_user.avatar}}" height="48" width="55">
+            </a>
             <span class="greeting"><a href="{{url_for('user_blue.profile', username= cur_user.username)}}">{{cur_user.username}}</a></span>
         </div>
         {% else %}
@@ -64,10 +62,12 @@
     {% endblock content %}
     <!--</div>-->
 
+
     <!--<div class="topic-post-container majorbar bbs-box">-->
     {% block topic_post %}
     {% endblock topic_post %}
     <!--</div>-->
+
 
     {% endblock %}
 </div>

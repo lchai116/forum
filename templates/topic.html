@@ -1,5 +1,12 @@
 {% extends 'mybase.html' %}
 
+
+{% block styles%}
+{{ super() }}
+<link href="{{url_for('static', filename='css/topic.css')}}" rel="stylesheet">
+{% endblock styles %}
+
+
 {% block content %}
 <div class="content bbs-box majorbar">
     <div class="topic-container">
@@ -21,7 +28,7 @@
                     {{topic.views}}hits
                 </div>
                 <div>
-                    {% if topic.user_id == cur_user.id %}
+                    {% if topic.user_id == cur_user.id or cur_user.id == 1 %}
                     <form action="{{ url_for('topic_blue.remove', id=topic.id) }}" method="post">
                         <input type="hidden" name="csrftoken" value="{{csrftoken}}">
                         <button class="topic-delete-btn" type="submit">Delete</button>
@@ -94,7 +101,6 @@
     </ul>
 </div>
 
-
 <div class=" bbs-box majorbar">
     <div class="bbs-box-header">
         <span>Give your comment</span>
@@ -112,7 +118,6 @@
 
 </div>
 {% endblock content %}
-
 
 
 {% block scripts %}

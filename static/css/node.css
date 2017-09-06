@@ -1,0 +1,43 @@
+.topic-post-container {
+    padding: 10px;
+}
+.topics, .ul-comments {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px 0px 30px 0px;
+    border-top: 1px solid #e0e0e0;
+}
+.topics .topic, .ul-comments .li-comment {
+    padding: 8px;
+    border-bottom: 1px solid #e0e0e0;
+}
+.topics .topic:hover {
+    background-color: #f0f0f0;
+}
+.topic-date {
+    float: right;
+}
+.topic-views {
+    float: right;
+    padding: 14px 14px 0 0;
+    color: #948e8e;
+}
+.topic-item-container, .comment-item-container {
+   /* margin-left: 48px; */
+    min-height: 48px;
+}
+.topic-header-cell, .topic-list-cell, .comment-cell {
+    margin-left: 70px;
+    margin-right: 90px;
+    word-break: break-word;
+  /*  clear: right; */
+}
+.topic-cell-avatar {
+    float: left;
+}
+.topic-cell-title {
+    font-size: 18px;
+}
+.topic-cell-info {
+    font-size: 12px;
+}

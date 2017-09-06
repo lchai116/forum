@@ -8,18 +8,6 @@ Model = TopicCls
 csrftoken_map = {}
 
 
-# no related link
-@main.route('/')
-def index():
-    ms = Model.query.all()
-    u = cur_user()
-    token = ''
-    if u:
-        token = str(uuid.uuid4())
-        csrftoken_map[token] = u.id
-    return render_template('topic_index.html', topics_list=ms, csrftoken=token)
-
-
 @main.route('/add', methods=['post'])
 @login_required
 def new():
@@ -30,7 +18,6 @@ def new():
         m.user_id = cur_user().id
         m.replyuser_id = m.user_id
         m.save()
-        print url_for('.index')
         return redirect(url_for('topic_blue.show', id=m.id))
     else:
         return '<h1>hello</h1>'

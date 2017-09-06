@@ -3,7 +3,6 @@ body {
     background: #e6e6e6;
     padding-top: 52px;
 }
-
 .bottombar {
     margin: 10px;
     font-size: 90%;
@@ -14,7 +13,6 @@ body {
     text-align: center;
     padding: 15px;
 }
-
 .main {
     margin: 20px auto;
     width: 80%;
@@ -24,18 +22,14 @@ body {
     max-width: 900px;
     min-width: 1080px;
 }
-
-
 .majorbar {
     margin: 10px 310px 10px 10px;
     background: white;
     font-size: 105%;
 }
-
 .pagination {
     margin: 15px 5px;
 }
-
 .sidebar {
     width: 280px;
     font-size: 105%;
@@ -43,78 +37,59 @@ body {
     margin: 10px 10px 10px 10px;
     padding:15px;
 }
-
-
-
-        .bbs-nav-container {
-            position: fixed;
-            z-index: 10;
-            top: 0px;
-            width: 100%;
-            background-color: #f8f8f8;
-            font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-            /* margin-bottom: 20px; */
-        }
-
-        .bbs-nav-container a {
-            text-decoration: none;
-            display: inline-block;
-            color: #777;
-        }
-
-        .bbs-nav-header {
-            float: left;
-        }
-
-        .bbs-nav-header a {
-            font-size: 30px;
-            padding: 8px;
-        }
-
-        .bbs-nav-cell {
-          /*  text-align: right;  */
-          /*  display flex; */
-        }
-
-        .bbs-navcell-item {
-            display: inline-block;
-           /* flex-grow: 1; */
-         /*   height: 20px;  */
-            font-size: 17px;
-            padding: 15px;
-        }
-        .bbs-navcell-item:hover {
-            background-color: #31044d;
-        }
-
-
-
-
-
-
+.bbs-nav-container {
+    position: fixed;
+    z-index: 10;
+    top: 0px;
+    width: 100%;
+    background-color: #f8f8f8;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    /* margin-bottom: 20px; */
+}
+.bbs-nav-container a {
+    text-decoration: none;
+    display: inline-block;
+    color: #777;
+}
+.bbs-nav-header {
+    float: left;
+}
+.bbs-nav-header a {
+    font-size: 30px;
+    padding: 8px;
+}
+.bbs-nav-cell {
+  /*  text-align: right;  */
+  /*  display flex; */
+}
+.bbs-navcell-item {
+    display: inline-block;
+   /* flex-grow: 1; */
+ /*   height: 20px;  */
+    font-size: 17px;
+    padding: 15px;
+}
+.bbs-navcell-item:hover {
+    background-color: #31044d;
+}
 .bbs-box {
     border-radius: 8px;
     background: white;
     overflow: hidden;
-
 }
-
 .cur_tag {
     background: #eee;
 }
-
 .bbs-box-header {
     background: #eee;
     padding: 10px;
 }
-
 .bbs-box-cell{
     padding: 10px;
 }
 .bbs-box-tail {
     border-top: 1px solid #f0f0f0;
     padding: 10px;
-
 }
 .greeting {
     margin-left: 5px;
@@ -124,109 +99,10 @@ body {
     text-decoration: none;
     color: #31044d;
 }
-
-
-
-.topic-post-container {
-    padding: 10px;
-}
-.topics, .ul-comments {
-    list-style-type: none;
-    padding: 0px;
-    margin: 0px 0px 30px 0px;
-    border-top: 1px solid #e0e0e0;
-}
-
-.topics .topic, .ul-comments .li-comment {
-    padding: 8px;
-    border-bottom: 1px solid #e0e0e0;
-}
-.topics .topic:hover {
-    background-color: #f0f0f0;
-}
-.topic-date {
-    float: right;
-}
-
-.topic-views {
-    float: right;
-    padding: 14px 14px 0 0;
-    color: #948e8e;
-}
-.topic-item-container, .comment-item-container {
-   /* margin-left: 48px; */
-    min-height: 48px;
-}
-.topic-header-cell, .topic-list-cell, .comment-cell {
-    margin-left: 70px;
-    margin-right: 90px;
-    word-break: break-word;
-  /*  clear: right; */
-}
-.topic-cell-avatar, .comment-cell-avatar {
-    float: left;
-}
-.topic-cell-title {
-    font-size: 18px;
-}
-.topic-cell-info {
-    font-size: 12px;
-}
 .bbs-avatar {
     height: 48px;
     width: 48px;
 }
-.topic-header {
-    padding: 10px;
-}
-.topic-full-title {
-    font-size: 22px;
-    font-weight: 700;
-    margin: 8px 0;
-}
-.topic-info {
-    margin-bottom: 18px;
-}
-.topic-full-body {
-    font-size: 15px;
-    padding: 20px;
-    border-top: 1px solid #e5e5e5;
-    word-break: break-word;
-}
-.topic-delete-btn {
-    border: none;
-    font-size: 12px;
-    border-radius: 6px;
-}
-.comment-reply-form {
-    display: none;
-}
-.like-icon-unhit {
-    color: #999;
-}
-.comment-btn-like {
-    padding-left: 7px;
-}
-.comment-buttons {
-    float: right;
-    border-radius: 12px;
-    padding-right: 15px;
-}
-.comment-reply-btn {
-    /* float: right; */
-    background: rgba(0, 0, 0, 0.14);
-    border: none;
-    border-radius: 12px;
-    font-size: smaller;
-    padding: 1px 7px;
-    margin: 0;
-    cursor: pointer;
-}
-
-
-
-
-
 .sign-title {
     border-bottom: solid 1px;
     margin-bottom: 30px;
