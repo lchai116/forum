@@ -11,6 +11,7 @@ class TopicCls(db.Model, ModelMixin):
     lastreplytime = db.Column(db.String(100))
     replycount = db.Column(db.Integer, default=0)
     views = db.Column(db.Integer, default=0)
+    favor_num = db.Column(db.Integer, default=0)
 
     node_id = db.Column(db.Integer, db.ForeignKey('nodes.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
@@ -35,6 +36,15 @@ class TopicCls(db.Model, ModelMixin):
         self.views = (self.views or 0) + 1
         self.save()
 
+    def get_customized_topic(self,cur_user):
+        user_id =cur_user.id
+        r = self.dict_response()
+        if not TopicCollection.query.filter_by(user_id=user_id, topic_id=self.id).first():
+            r['iscollected'] = False
+        else:
+            r['iscollected'] = True
+        return r
+
     def get_customized_comments(self, cur_user):
         user_id = cur_user.id
         comments = self.comments
@@ -47,6 +57,40 @@ class TopicCls(db.Model, ModelMixin):
                 r['islike'] = True
             cs.append(r)
         return cs
+
+    def favor_handle(self, topic_id, cur_user):
+        form = dict(
+            topic_id=topic_id,
+            user_id=cur_user.id,
+        )
+        tc = TopicCollection.query.filter_by(user_id=cur_user.id, topic_id=topic_id).first()
+        if not tc:
+            TopicCollection(form).save()
+            self.favor_num += 1
+            self.save()
+            delta = 1
+        else:
+            TopicCollection.delete(tc.id)
+            self.favor_num -= 1
+            self.save()
+            delta = 0
+        return True, {'delta': delta}, 'favor handled ok'
+
+    def dict_response(self):
+        r = dict(
+            id=self.id,
+            title=self.title,
+            username=self.user_ref.username,
+            avatar=self.user_ref.avatar,
+            created_time=self.created_time,
+            node_id=self.node_id,
+            node_name=self.node_ref.node_name,
+            views=self.views,
+            user_id=self.user_id,
+            content=self.content,
+            replycount=self.replycount,
+        )
+        return r
 
 
 class CommentCls(db.Model, ModelMixin):
@@ -126,4 +170,17 @@ class CommentLike(db.Model, ModelMixin):
     def __init__(self, form):
         self.created_time = unix_time()
         self.comment_id = form.get('comment_id')
+        self.user_id = form.get('user_id')
+
+
+class TopicCollection(db.Model, ModelMixin):
+    __tablename__ = 'topic_collection'
+    id = db.Column(db.Integer, primary_key=True)
+    created_time = db.Column(db.String(100), default=0)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    topic_id = db.Column(db.Integer)
+
+    def __init__(self, form):
+        self.created_time = unix_time()
+        self.topic_id = form.get('topic_id')
         self.user_id = form.get('user_id')

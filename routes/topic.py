@@ -27,16 +27,16 @@ def new():
 def show(id):
     m = Model.query.get(id)
     if not m:
-        return redirect(url_for('node_blue.show', id=1))
+        return redirect(url_for('node_blue.show'))
     m.view_add()
-    ns = NodeCls.query.all()
     u = cur_user()
     token = ''
     if u:
         token = str(uuid.uuid4())
         csrftoken_map[token] = u.id
+    topic = m.get_customized_topic(u)
     cs = m.get_customized_comments(u)
-    return render_template('topic.html', topic=m, comments=cs, cur_user=u, csrftoken=token)
+    return render_template('topic.html', topic=topic, comments=cs, cur_user=u, csrftoken=token)
 
 
 @main.route('/edit/<int:id>')

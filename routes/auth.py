@@ -15,7 +15,7 @@ def signin():
             session['user_id'] = u_db.id
             r = {
                 'success': True,
-                'redirect_url': url_for('node_blue.show', id=1),
+                'redirect_url': url_for('node_blue.show'),
             }
             return json.dumps(r)
         else:
@@ -30,14 +30,11 @@ def signup():
         form = request.form
         u = UserCls(form)
         if u.validate_register():
-            u.get_avatar()
-            u.get_created_time()
-            u.save()
             u_db = UserCls.query.filter_by(username=u.username).first()
             session['user_id'] = u_db.id
             r = {
                 'success': True,
-                'redirect_url': url_for('node_blue.show', id=1),
+                'redirect_url': url_for('node_blue.show'),
             }
             return json.dumps(r)
         else:
@@ -50,4 +47,4 @@ def signup():
 @login_required
 def signout():
     session.pop('user_id', None)
-    return redirect(url_for('node_blue.show', id=1))
+    return redirect(url_for('node_blue.show'))

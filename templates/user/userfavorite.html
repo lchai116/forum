@@ -1,0 +1,68 @@
+{% extends "mybase.html" %}
+{% import '_macro.html' as macro %}
+
+
+{% block title %}
+    <title>DU1>{{user.username}}</title>
+{% endblock %}
+
+
+{% block styles%}
+{{ super() }}
+<link href="{{url_for('static', filename='css/node.css')}}" rel="stylesheet">
+{% endblock styles %}
+
+
+{% block sidebar %}
+ <div class="sidebar bbs-box">
+     <div>
+         <a href="{{url_for('user_blue.profile', username= user.username)}}"><img class="bbs-avatar" src="{{user.avatar}}" height="48" width="55"></a>
+         <span class="greeting"><a href="{{url_for('user_blue.profile', username= user.username)}}">{{user.username}}</a></span>
+     </div>
+ </div>
+{% endblock sidebar %}
+
+
+{% block content -%}
+<div class=" bbs-box majorbar">
+    <div class="bbs-box-header"><span>Favorite topics</span></div>
+    <div class="bbs-box-cell">
+        <ul class="topics" style="margin-bottom: 0px;">
+            {% for t in favorite %}
+            <li class="topic">
+                <div class="topic-item-container">
+                    <div class="topic-date"></div>
+                    <a class="topic-cell-avatar" href="{{url_for('user_blue.profile', username=t.user_ref.username)}}">
+                        <img class="bbs-avatar" src="{{t.user_ref.avatar}}" height="48" width="55">
+                    </a>
+                    <div class="topic-list-cell">
+                        <div class="topic-cell-title"><a href="{{url_for('topic_blue.show', id=t.id)}}">{{t.title}}</a></div>
+                        <div class="topic-cell-info">
+                            <strong><a href="{{url_for('user_blue.profile', username=t.user_ref.username)}}">{{t.user_ref.username}}</a></strong>
+                            &nbsp;  •  &nbsp;
+                            last updated by
+                            <strong>
+                                <a href="{{url_for('user_blue.profile', username=t.lastreplyer_ref.username)}}">
+                                    {{t.lastreplyer_ref.username}}
+                                </a>
+                            </strong>
+                            &nbsp<time>{{t.lastreplytime}}</time>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="pagination">
+        {{ macro.paging(pagination, 'user_blue.user_favorite', username=user.username) }}
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+
+
+

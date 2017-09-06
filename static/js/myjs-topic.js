@@ -60,9 +60,28 @@ var bindEventCommentLike = function(){
     })
 }
 
+var bindEventTopicFavor = function(){
+    $('.topic-favor-btn').on('click', function(event){
+        var self = $(this)
+        var topic_id = self.closest('.topic-info').data('id')
+                log('outout')
+        var response = function(resp){
+            if(resp.success){
+                if(r.data.delta){
+                    log('jifjeoluch')
+                    self.val('Remove from favorite')
+                }else{
+                    self.val('Add as favorite')
+                }
+            }
+        }
+        api.post('/api/topic/favor', {topic_id: topic_id}, response)
+    })
+}
 
 
 var _main = function(){
+    bindEventTopicFavor()
     bindEventCommentReply()
     bindEventCommentLike()
     bindEventReplyBtnToggle()

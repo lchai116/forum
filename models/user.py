@@ -1,11 +1,13 @@
 from . import db, ModelMixin, unix_time
 from random import randint
+from werkzeug.security import generate_password_hash, check_password_hash
+
 
 class UserCls(db.Model, ModelMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), unique=True)
-    password = db.Column(db.String(64))
+    password_hashed = db.Column(db.String(200))
     email = db.Column(db.String(64), default='')
     created_time = db.Column(db.String(64), default='')
     avatar = db.Column(db.String(100))
@@ -19,6 +21,9 @@ class UserCls(db.Model, ModelMixin):
                                    backref='sender_ref')
     comment_in = db.relationship('CommentCls', foreign_keys='CommentCls.receiver_id',
                                   backref='receiver_ref')
+    topic_collection = db.relationship('TopicCollection', backref='user_ref',
+                                       lazy='dynamic', order_by='desc(TopicCollection.id)')
+
 
     def __init__(self, form):
         self.username = form.get('username', '')
@@ -37,16 +42,21 @@ class UserCls(db.Model, ModelMixin):
         if u is None:
             return False
         else:
-            return self.username == u.username and self.password == u.password
+            return check_password_hash(u.password_hashed, self.password)
 
     def is_admin(self):
         return self.id == 1
 
     def validate_register(self):
         u = UserCls.query.filter_by(username=self.username).first()
-        if u is not None:
-            return False
+        isvalid_username = 2 < len(self.username) < 9
+        isvalid_password = 2 < len(self.password) < 9
+        if not u and isvalid_password and isvalid_password:
+            self.password_hashed = generate_password_hash(self.password)
+            self.get_avatar()
+            self.get_created_time()
+            self.save()
+            return True
         else:
-            return len(self.username) > 3 and len(self.password) > 2
-
+            return False
 

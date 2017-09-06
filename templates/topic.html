@@ -11,19 +11,24 @@
 <div class="content bbs-box majorbar">
     <div class="topic-container">
         <div class="topic-header">
-            <a class="topic-cell-avatar" href="{{url_for('user_blue.profile', username=topic.user_ref.username)}}">
-                <img class="bbs-avatar" src="{{topic.user_ref.avatar}}">
+            <a class="topic-cell-avatar" href="{{url_for('user_blue.profile', username=topic.username)}}">
+                <img class="bbs-avatar" src="{{topic.avatar}}">
             </a>
             <div class="topic-header-cell">
                 <div class="topic-full-title">{{topic.title}}</div>
-                <div class="topic-info">
-                    <strong><a href="{{url_for('user_blue.profile', username=topic.user_ref.username)}}">{{topic.user_ref.username}}</a></strong>
+                <div class="topic-info" data-id="{{topic.id}}">
+                    {% if topic.iscollected %}
+                    <input class="topic-favor-btn span-common  pull-right collect_btn" type="submit" value="Remove from favorite">
+                    {% else %}
+                    <input class="topic-favor-btn span-common  pull-right collect_btn" type="submit" value="Add as favorite">
+                    {% endif %}
+                    <strong><a href="{{url_for('user_blue.profile', username=topic.username)}}">{{topic.username}}</a></strong>
                       •
                     posted at
                     <time>{{topic.created_time}}</time>
                       •
                     from
-                    <a href="{{url_for('node_blue.show', id=topic.node_id)}}">{{topic.node_ref.node_name}}</a>
+                    <a href="{{url_for('node_blue.show', id=topic.node_id)}}">{{topic.node_name}}</a>
                       •
                     {{topic.views}}hits
                 </div>
@@ -108,7 +113,7 @@
     <div class="bbs-box-cell bbs-comment-post">
         <form role="form" action="{{url_for('comment_blue.new')}}" method="post">
             <div><input type="hidden" name="topic_id" value="{{topic.id}}"></div>
-            <div><input type="hidden" name="receiver_id" value="{{topic.user_ref.id}}"></div>
+            <div><input type="hidden" name="receiver_id" value="{{topic.user_id}}"></div>
             <div>
                 <textarea id="id-comment-content" class="form-control" rows="5" name="content"></textarea>
             </div>

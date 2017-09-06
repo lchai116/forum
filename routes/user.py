@@ -1,5 +1,5 @@
 from models.user import UserCls
-from models.topic import TopicCls, CommentCls
+from models.topic import TopicCls, CommentCls, TopicCollection
 from . import *
 
 
@@ -56,6 +56,25 @@ def user_topics(username):
         abort(404)
 
 
+@main.route('/profile/<username>/favorite')
+@login_required
+def user_favorite(username):
+    u = UserCls.query.filter_by(username=username).first()
+    cur_u = cur_user()
+    if u.id == cur_u.id:
+        page = request.args.get('p', 1, type=int)
+        pagination = TopicCls.query.join(TopicCollection, TopicCollection.topic_id == TopicCls.id) \
+            .filter(TopicCollection.user_id == u.id) \
+            .paginate(page, per_page=8)
+
+        favorite = pagination.items
+
+        return render_template('user/userfavorite.html', user=u, favorite=favorite,
+                               pagination=pagination)
+    else:
+        abort(403)
+
+
 @main.route('/profile/<username>/replies')
 def user_replied_topics(username):
     u = UserCls.query.filter_by(username=username).first()
@@ -70,4 +89,4 @@ def user_replied_topics(username):
         return render_template('user/user_replied_topics.html', user=u, topics_replied=tpc_rel,
                                pagination=pagination)
     else:
-        abort(404)
+        abort(403)

@@ -3,8 +3,19 @@ from models.node import NodeCls
 from . import *
 
 
-main = Blueprint('commentApi_blue', __name__)
-Model = CommentCls
+main = Blueprint('topicApi_blue', __name__)
+
+
+@main.route('/topic/favor', methods=['post'])
+def topic_favor():
+    form = request.form
+    topic_id = form.get('topic_id', -1, type=int)
+    u = cur_user()
+    topic = TopicCls.query.get(topic_id)
+    if not topic:
+        return api_response()
+    status, data, message = topic.favor_handle(topic_id, u)
+    return api_response(status, data, message)
 
 
 @main.route('/comment/like', methods=['post'])

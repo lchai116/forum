@@ -26,7 +26,7 @@
    /* margin-left: 48px; */
     min-height: 48px;
 }
-.topic-header-cell, .topic-list-cell, .comment-cell {
+.topic-list-cell {
     margin-left: 70px;
     margin-right: 90px;
     word-break: break-word;

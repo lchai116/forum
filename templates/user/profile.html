@@ -47,6 +47,7 @@
                     <input style="border: lightgrey;" type="submit" value="upload">
                 </form>
             </div>
+            <a href="{{ url_for('user_blue.user_favorite', username=user.username) }}">Favorite topics</a>
             {% endif %}
             <div>E-mail: {{user.email}}</div>
             <div>Member since: <time id="id-time">{{user.created_time}}</time></div>
