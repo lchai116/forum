@@ -37,24 +37,32 @@ class TopicCls(db.Model, ModelMixin):
         self.save()
 
     def get_customized_topic(self,cur_user):
-        user_id =cur_user.id
         r = self.dict_response()
-        if not TopicCollection.query.filter_by(user_id=user_id, topic_id=self.id).first():
-            r['iscollected'] = False
+        if cur_user:
+            user_id =cur_user.id
+            r['islogined'] = True
+            if not TopicCollection.query.filter_by(user_id=user_id, topic_id=self.id).first():
+                r['iscollected'] = False
+            else:
+                r['iscollected'] = True
         else:
-            r['iscollected'] = True
+            r['islogined'] = False
         return r
 
     def get_customized_comments(self, cur_user):
-        user_id = cur_user.id
         comments = self.comments
         cs = []
         for c in comments:
             r = c.dict_response()
-            if not CommentLike.query.filter_by(user_id=user_id, comment_id=c.id).first():
-                r['islike'] = False
+            if cur_user:
+                r['islogined'] = True
+                user_id = cur_user.id
+                if not CommentLike.query.filter_by(user_id=user_id, comment_id=c.id).first():
+                    r['islike'] = False
+                else:
+                    r['islike'] = True
             else:
-                r['islike'] = True
+                r['islogined'] = False
             cs.append(r)
         return cs
 
@@ -174,6 +182,7 @@ class CommentLike(db.Model, ModelMixin):
 
 
 class TopicCollection(db.Model, ModelMixin):
+    # users' favorite topics collection
     __tablename__ = 'topic_collection'
     id = db.Column(db.Integer, primary_key=True)
     created_time = db.Column(db.String(100), default=0)

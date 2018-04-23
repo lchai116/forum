@@ -56,7 +56,7 @@ var bindEventCommentLike = function(){
                 tag_like_num.text(String(updated_like_num))
             }
         }
-        api.post('/api/comment/like', {comment_id: comment_id}, response)
+        api.post('/api/topic/comment/like', {comment_id: comment_id}, response)
     })
 }
 

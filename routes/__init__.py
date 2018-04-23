@@ -25,6 +25,7 @@ def login_required(f):
     return wrapper
 
 
+# response template for ajax request
 def api_response(status=False, data=None, message=''):
     r = dict(
         success=status,

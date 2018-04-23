@@ -64,7 +64,7 @@ def user_favorite(username):
     if u.id == cur_u.id:
         page = request.args.get('p', 1, type=int)
         pagination = TopicCls.query.join(TopicCollection, TopicCollection.topic_id == TopicCls.id) \
-            .filter(TopicCollection.user_id == u.id) \
+            .filter(TopicCollection.user_id == u.id).order_by(TopicCollection.created_time.desc()) \
             .paginate(page, per_page=8)
 
         favorite = pagination.items

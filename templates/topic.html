@@ -17,10 +17,12 @@
             <div class="topic-header-cell">
                 <div class="topic-full-title">{{topic.title}}</div>
                 <div class="topic-info" data-id="{{topic.id}}">
-                    {% if topic.iscollected %}
-                    <input class="topic-favor-btn span-common  pull-right collect_btn" type="submit" value="Remove from favorite">
-                    {% else %}
-                    <input class="topic-favor-btn span-common  pull-right collect_btn" type="submit" value="Add as favorite">
+                    {% if topic.islogined %}
+                        {% if topic.iscollected %}
+                        <input class="topic-favor-btn span-common  pull-right collect_btn" type="submit" value="Remove from favorite">
+                        {% else %}
+                        <input class="topic-favor-btn span-common  pull-right collect_btn" type="submit" value="Add as favorite">
+                        {% endif %}
                     {% endif %}
                     <strong><a href="{{url_for('user_blue.profile', username=topic.username)}}">{{topic.username}}</a></strong>
                       •
@@ -62,11 +64,14 @@
                 </a>
                 <div class="comment-buttons">
                     <div class="comment-btn-like">
-
-                        {% if c.islike%}
-                        <a href="#"><span class="glyphicon glyphicon-thumbs-up comment-like-icon"></span></a>
+                        {% if c.islogined %}
+                            {% if c.islike%}
+                            <a href="#"><span class="glyphicon glyphicon-thumbs-up comment-like-icon"></span></a>
+                            {% else %}
+                            <a href="#"><span class="glyphicon glyphicon-thumbs-up comment-like-icon like-icon-unhit"></span></a>
+                            {% endif %}
                         {% else %}
-                        <a href="#"><span class="glyphicon glyphicon-thumbs-up comment-like-icon like-icon-unhit"></span></a>
+                            <a href="#"><span class="glyphicon glyphicon-thumbs-up like-icon-unhit"></span></a>
                         {% endif %}
                         &nbsp;
                         <label class="comment-like-num">{{c.like_num}}</label>

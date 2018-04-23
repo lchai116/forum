@@ -8,14 +8,14 @@ from routes.topic import main as topic_blue
 from routes.user import main as user_blue
 from routes.auth import main as auth_blue
 from routes.comment import main as comment_blue
-from routes.comment_api import main as commentApi_blue
+from routes.topic_api import main as topicApi_blue
 from routes.backend import main as backend_blue
 
 
-# for db migration
+# import for db migration only
 from models.user import UserCls
 from models.node import NodeCls
-from models.topic import TopicCls, CommentCls, CommentLike
+from models.topic import TopicCls, CommentCls, CommentLike, TopicCollection
 
 
 app = Flask(__name__)
@@ -31,12 +31,12 @@ def register_routes():
     app.register_blueprint(auth_blue)
     app.register_blueprint(user_blue, url_prefix='/user')
     app.register_blueprint(comment_blue, url_prefix='/comment')
-    app.register_blueprint(commentApi_blue, url_prefix='/api')
+    app.register_blueprint(topicApi_blue, url_prefix='/api/topic')
     app.register_blueprint(backend_blue, url_prefix='/backend')
 
 
 def configure_app():
-    app.secret_key = 'luch'
+    app.secret_key = '1234'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///{}'.format(db_path)
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
     db.init_app(app)
@@ -57,7 +57,6 @@ def configured_app():
 
 @manager.command
 def server():
-    print('server run')
     app = configured_app()
     config = dict(
         debug=True,
