@@ -5,7 +5,7 @@ from . import *
 
 main = Blueprint('topic_blue', __name__)
 Model = TopicCls
-csrftoken_map = {}
+# csrftoken_map = {}
 
 
 @main.route('/add', methods=['post'])
@@ -40,11 +40,13 @@ def show(id):
 
 
 @main.route('/edit/<int:id>')
+@login_required
 def edit(id):
     return render_template('topic_edit.html', topicid=id)
 
 
 @main.route('/update/<int:id>', methods=['post'])
+@login_required
 def update(id):
     m = Model.query.get(id)
     m.node_name = request.form.get('content', '')
@@ -53,10 +55,12 @@ def update(id):
 
 
 @main.route('/delete/<int:id>', methods=['post'])
+@login_required
 def remove(id):
     token = request.form.get('csrftoken')
     u = cur_user()
-    if csrftoken_map.get(token, '') == u.id:
+    if csrftoken_map.get(token, '') == u.id and Model.isvalid_delete(u, id):
+        csrftoken_map.pop(token)
         Model.delete(id)
         return redirect(url_for('node_blue.show', id=1))
     else:

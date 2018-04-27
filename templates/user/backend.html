@@ -41,7 +41,7 @@ nodes
             <div class="node-item-container">
                 <div class="node-list-cell">
                     <div class="node-delete-btn">
-                        <form action="{{ url_for('backend_blue.remove', id=n.id) }}" method="post">
+                        <form action="{{ url_for('backend_blue.node_remove', id=n.id) }}" method="post">
                             <input type="hidden" name="csrftoken" value="{{csrftoken}}">
                             <button class="btn btn-default" type="submit">Delete</button>
                         </form>

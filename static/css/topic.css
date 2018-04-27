@@ -28,7 +28,7 @@
     border-top: 1px solid #e5e5e5;
     word-break: break-word;
 }
-.topic-delete-btn {
+.topic-delete-btn{
     border: none;
     font-size: 12px;
     border-radius: 6px;
@@ -60,15 +60,15 @@
     color: #999;
 }
 .comment-btn-like {
+    float: right;
     padding-left: 7px;
 }
 .comment-buttons {
-    float: right;
     border-radius: 12px;
     padding-right: 15px;
 }
-.comment-reply-btn {
-    /* float: right; */
+.comment-reply-btn, .comment-delete-btn {
+    float: right;
     background: rgba(0, 0, 0, 0.14);
     border: none;
     border-radius: 12px;

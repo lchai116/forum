@@ -33,7 +33,7 @@ def add_img():
     u = cur_user()
     f = request.files.get('avatar')
     if f and valid_img_upload(f.filename):
-        filename  = str(uuid.uuid4())
+        filename = str(uuid.uuid4())
         path = upload_dir + filename + '.' + f.filename.split('.')[-1]
         f.save(path[1:])
         u.avatar = path

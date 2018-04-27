@@ -1,11 +1,10 @@
-from models.topic import TopicCls
 from models.node import NodeCls
+from models.topic import CommentCls
 from . import *
 
 
 main = Blueprint('backend_blue', __name__)
-Model = NodeCls
-csrftoken_map = {}
+# csrftoken_map = {}
 
 
 def admin_required():
@@ -35,12 +34,24 @@ def new():
     return redirect(url_for('backend_blue.index'))
 
 
-@main.route('/delete/<int:id>', methods=['post'])
-def remove(id):
+@main.route('/node/delete/<int:id>', methods=['post'])
+def node_remove(id):
     token = request.form.get('csrftoken')
     u = cur_user()
     if csrftoken_map.get(token, '') == u.id:
-        Model.delete(id)
+        NodeCls.delete(id)
         return redirect(url_for('backend_blue.index'))
+    else:
+        abort(403)
+
+
+@main.route('/comment/delete/<int:id>', methods=['post'])
+def comment_remove(id):
+    token = request.form.get('csrftoken')
+    u = cur_user()
+    if csrftoken_map.get(token, '') == u.id:
+        c = CommentCls.query.get(id)
+        CommentCls.delete(id)
+        return redirect(url_for('topic_blue.show', id=c.topic_id))
     else:
         abort(403)

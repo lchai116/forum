@@ -5,6 +5,7 @@ from functools import wraps
 import json, random, uuid
 
 bootstrap = Bootstrap()
+csrftoken_map = {}
 
 
 def cur_user():

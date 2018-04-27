@@ -32,6 +32,13 @@ class TopicCls(db.Model, ModelMixin):
         else:
             return False
 
+    def isvalid_delete(self, u, tid):
+        t = self.query.get(tid)
+        if u.is_admin or u.id == t.user_id:
+            return True
+        else:
+            return False
+
     def view_add(self):
         self.views = (self.views or 0) + 1
         self.save()

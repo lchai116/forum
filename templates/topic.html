@@ -63,6 +63,7 @@
                     <img class="bbs-avatar" src="{{c.avatar}}" height="48" width="48">
                 </a>
                 <div class="comment-buttons">
+
                     <div class="comment-btn-like">
                         {% if c.islogined %}
                             {% if c.islike%}
@@ -76,7 +77,14 @@
                         &nbsp;
                         <label class="comment-like-num">{{c.like_num}}</label>
                     </div>
+
                     <label class="comment-reply-btn">Reply</label>
+                    {% if cur_user.id == 1 %}
+                    <form action="{{ url_for('backend_blue.comment_remove', id=c.id) }}" method="post">
+                        <input type="hidden" name="csrftoken" value="{{csrftoken}}">
+                        <button class="comment-delete-btn" type="submit">DEL</button>
+                    </form>&nbsp;
+                    {% endif %}
                     <!--<button class="comment-reply-btn">Reply</button>-->
                 </div>
                 <div class="comment-cell">
