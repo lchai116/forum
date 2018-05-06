@@ -5,6 +5,7 @@ from . import *
 main = Blueprint('auth_blue', __name__)
 
 
+@main.route('/')
 @main.route('/signin', methods=['post', 'get'])
 def signin():
     if request.method == 'POST':
