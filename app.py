@@ -25,13 +25,13 @@ bootstrap.init_app(app)
 
 
 def register_routes():
-    app.register_blueprint(node_blue, url_prefix='/node')
-    app.register_blueprint(topic_blue, url_prefix='/topic')
-    app.register_blueprint(auth_blue)
-    app.register_blueprint(user_blue, url_prefix='/user')
-    app.register_blueprint(comment_blue, url_prefix='/comment')
-    app.register_blueprint(topicApi_blue, url_prefix='/api/topic')
-    app.register_blueprint(backend_blue, url_prefix='/backend')
+    app.register_blueprint(node_blue, url_prefix='/forum/node')
+    app.register_blueprint(topic_blue, url_prefix='/forum/topic')
+    app.register_blueprint(auth_blue, url_prefix='/forum')
+    app.register_blueprint(user_blue, url_prefix='/forum/user')
+    app.register_blueprint(comment_blue, url_prefix='/forum/comment')
+    app.register_blueprint(topicApi_blue, url_prefix='/forum/api/topic')
+    app.register_blueprint(backend_blue, url_prefix='/forum/backend')
 
 
 def configure_app():
