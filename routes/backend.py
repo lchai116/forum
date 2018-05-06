@@ -30,7 +30,6 @@ def new():
     form = request.form
     n = NodeCls(form)
     n.save()
-    print url_for('backend_blue.index')
     return redirect(url_for('backend_blue.index'))
 
 

@@ -22,7 +22,6 @@ app = Flask(__name__)
 manager = Manager(app)
 db_path = 'forum.sqlite'
 bootstrap.init_app(app)
-print list(app.iter_blueprints())
 
 
 def register_routes():
@@ -40,7 +39,6 @@ def configure_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///{}'.format(db_path)
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
     db.init_app(app)
-    print [i.name for i in list(app.iter_blueprints())]
     #bootstrap.init_app(app)
     register_routes()
 
