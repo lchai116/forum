@@ -22,7 +22,7 @@ class UserCls(db.Model, ModelMixin):
     comment_in = db.relationship('CommentCls', foreign_keys='CommentCls.receiver_id',
                                   backref='receiver_ref')
     topic_collection = db.relationship('TopicCollection', backref='user_ref',
-                                       lazy='dynamic', order_by='desc(TopicCollection.id)')
+                                       lazy='dynamic')
 
 
     def __init__(self, form):

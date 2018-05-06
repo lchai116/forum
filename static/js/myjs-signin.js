@@ -22,7 +22,7 @@ var bindAction = function(){
             swal('Username or password can\'t be empty')
         }else{
             event.preventDefault()
-            api.post('/signin', form, signinHandle)
+            api.post('/forum/signin', form, signinHandle)
         }
     })
 

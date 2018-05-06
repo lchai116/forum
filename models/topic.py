@@ -194,7 +194,7 @@ class TopicCollection(db.Model, ModelMixin):
     id = db.Column(db.Integer, primary_key=True)
     created_time = db.Column(db.String(100), default=0)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    topic_id = db.Column(db.Integer)
+    topic_id = db.Column(db.Integer, db.ForeignKey('topics.id'))
 
     def __init__(self, form):
         self.created_time = unix_time()

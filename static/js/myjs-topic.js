@@ -56,7 +56,7 @@ var bindEventCommentLike = function(){
                 tag_like_num.text(String(updated_like_num))
             }
         }
-        api.post('/api/topic/comment/like', {comment_id: comment_id}, response)
+        api.post('/forum/api/topic/comment/like', {comment_id: comment_id}, response)
     })
 }
 
@@ -75,7 +75,7 @@ var bindEventTopicFavor = function(){
                 }
             }
         }
-        api.post('/api/topic/favor', {topic_id: topic_id}, response)
+        api.post('/forum/api/topic/favor', {topic_id: topic_id}, response)
     })
 }
 

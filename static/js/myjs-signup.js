@@ -4,7 +4,7 @@ var signupHandle = function(resp){
         var url = resp.redirect_url
         window.location = url
     }else{
-        swal('Username exists. Signup fail!')
+        swal('Signup fail!')
     }
 }
 
@@ -34,7 +34,7 @@ var bindAction = function(){
         }
         if(formatCheck(form)){
             log('up api')
-            api.post('/signup', form, signupHandle)
+            api.post('/forum/signup', form, signupHandle)
         }
 
     })

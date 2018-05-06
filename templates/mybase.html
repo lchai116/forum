@@ -16,8 +16,8 @@
     <div class="bbs-nav-header"><a href="#">DU1-Forum</a></div>
     <div class="bbs-nav-cell" align="">
         <a class="bbs-navcell-item" href="{{ url_for('node_blue.show') }}">Home</a>
-        <a class="bbs-navcell-item" href="#">WaterPool</a>
-        <a class="bbs-navcell-item" href="#">Songs</a>
+        <a class="bbs-navcell-item" href="#">Issues</a>
+        <a class="bbs-navcell-item" href="#">Explore</a>
         {% if cur_user %}
         <a class="bbs-navcell-item" href="{{ url_for('auth_blue.signout') }}">Sign Out</a>
         {% else %}
@@ -50,10 +50,10 @@
         </div>
         {% else %}
         <h1>Hello! guest</h1>
-        <a href="/signin">Sign In to share</a>
+        <a href="{{ url_for('auth_blue.signin') }}">Sign In to share</a>
         {% endif %}
     </div>
-    {% endblock sidebar %}
+    {% endblock sidebar %
     <!--</div>-->
 
 
