@@ -48,14 +48,14 @@ def configure_manager():
     manager.add_command('db', MigrateCommand)
 
 
-def configured_app():
+def create_app():
     configure_app()
     return app
 
 
 @manager.command
 def server():
-    app = configured_app()
+    app = create_app()
     config = dict(
         debug=True,
         host='0.0.0.0',
