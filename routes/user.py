@@ -45,13 +45,14 @@ def add_img():
 def user_topics(username):
     u = UserCls.query.filter_by(username=username).first()
     if u:
+        cur_u = cur_user()
         page = request.args.get('p', 1, type=int)
         pagination = TopicCls.query.filter_by(user_id=u.id)\
                     .order_by(TopicCls.created_time.desc()).paginate(page, per_page=8)
         user_topics = pagination.items
 
         return render_template('user/usertopics.html', user=u, topics_created=user_topics,
-                               pagination=pagination)
+                               pagination=pagination, cur_user=cur_u)
     else:
         abort(404)
 
@@ -70,7 +71,7 @@ def user_favorite(username):
         favorite = pagination.items
 
         return render_template('user/userfavorite.html', user=u, favorite=favorite,
-                               pagination=pagination)
+                               pagination=pagination, cur_user=cur_u)
     else:
         abort(403)
 
@@ -79,6 +80,7 @@ def user_favorite(username):
 def user_replied_topics(username):
     u = UserCls.query.filter_by(username=username).first()
     if u:
+        cur_u = cur_user()
         page = request.args.get('p', 1, type=int)
         pagination = TopicCls.query.join(CommentCls, CommentCls.topic_id == TopicCls.id) \
             .filter(CommentCls.sender_id == u.id) \
@@ -87,6 +89,6 @@ def user_replied_topics(username):
         tpc_rel = pagination.items
 
         return render_template('user/user_replied_topics.html', user=u, topics_replied=tpc_rel,
-                               pagination=pagination)
+                               pagination=pagination, cur_user=cur_u)
     else:
         abort(403)

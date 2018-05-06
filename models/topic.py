@@ -32,8 +32,9 @@ class TopicCls(db.Model, ModelMixin):
         else:
             return False
 
-    def isvalid_delete(self, u, tid):
-        t = self.query.get(tid)
+    @classmethod
+    def isvalid_delete(cls, u, tid):
+        t = cls.query.get(tid)
         if u.is_admin or u.id == t.user_id:
             return True
         else:
